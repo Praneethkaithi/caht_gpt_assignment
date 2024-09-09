@@ -1,0 +1,17 @@
+hey hi praneeth this side 
+firstly i just want to say  
+i used flask application to operatefrontend and backend 
+and about gpt integration i used gpt4free repository from git hub :https://github.com/xtekky/gpt4free 
+and as of now i am getting response of test cases by giving specific task 
+example : by giving promt it gives the test cases as metioned in document with funtionlity 
+1.air bnb login functionality as step-by-step guide on how to test each functionality. Each test case should include:
+Description: What the test case is about.
+Pre-conditions: What needs to be set up or ensured before testing.
+Testing Steps: Clear, step-by-step instructions on how to perform the test.
+Expected Result: What should happen if the feature works correctly.
+
+ and i tryied to do photo integration but there i nave no credits in openai . if it available then i will done easyly but i got the alternative opensource but its requirement is 64gb of ram and 40 gb storage - advantage of using that open source llm model is we can use every llm present in the market example : cloud 3.5 , gpt 4 etc but the open source llm is more efficient than chat gpt and cluade sonnet 
+1.and i try to do automate the process using selenium , playwrite but it taking time and there is a time limitation if there is any extention i would easyly done it but 
+i have a mind set that if any task is incompleted i make sure i complete and learn the unknown skills . thanks for giving opportunity 
+if there is any doubt don't hesitate to talks 
+venkatasaipraneethkumar@gmail.com 

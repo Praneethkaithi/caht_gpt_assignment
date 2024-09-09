@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Testing Tool</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"],
+        input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .response-container {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+        #serverResponse {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="input-group">
+        <label for="context">Context (Optional):</label>
+        <input type="text" id="context" placeholder="Enter context (optional)">
+    </div>
+    <div class="input-group">
+        <label for="screenshots">Upload Screenshots (Required):</label>
+        <input type="file" id="screenshots" multiple accept="image/*">
+    </div>
+    <button id="describeBtn">Describe Testing Instructions</button>
+    <div id="response" class="response-container" style="display: none;">
+        <h3>Response</h3>
+        <p><strong>Context:</strong> <span id="contextResponse"></span></p>
+        <p><strong>Server Response:</strong></p>
+        <pre id="serverResponse"></pre>
+        <p><strong>Uploaded Files:</strong></p>
+        <ul id="fileList"></ul>
+    </div>
+</div>
+
+<script>
+    document.getElementById('describeBtn').addEventListener('click', function () {
+        const context = document.getElementById('context').value;
+        const screenshots = document.getElementById('screenshots').files;
+
+        if (screenshots.length === 0) {
+            alert('Please upload at least one screenshot.');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('context', context);
+
+        for (let i = 0; i < screenshots.length; i++) {
+            formData.append('screenshots', screenshots[i]);
+        }
+
+        fetch('/upload', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                alert('Error: ' + data.error);
+            } else {
+                document.getElementById('contextResponse').textContent = data.context || 'No context provided';
+                document.getElementById('serverResponse').textContent = data.server_response || 'No response from server';
+
+                const fileList = document.getElementById('fileList');
+                fileList.innerHTML = ''; // Clear the list before adding new files
+                data.saved_files.forEach(file => {
+                    const li = document.createElement('li');
+                    li.textContent = file;
+                    fileList.appendChild(li);
+                });
+
+                // Show the response container
+                document.getElementById('response').style.display = 'block';
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error uploading files or processing response.');
+        });
+    });
+</script>
+
+</body>
+</html>

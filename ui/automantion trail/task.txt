@@ -1,0 +1,17 @@
+from selenium import webdriver
+
+# Path to your WebDriver executable
+driver_path = 'path/to/chromedriver'  # Update this with the path to your chromedriver executable
+
+# Create a new instance of the Chrome driver
+driver = webdriver.Chrome(executable_path=driver_path)
+
+# Navigate to YouTube
+driver.get('https://claude.ai/new')
+
+# Optional: You can add more actions here
+
+# Close the browser after 10 seconds
+import time
+time.sleep(10)
+driver.quit()
